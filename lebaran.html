@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Minal Aidin Wal Faizin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #E8C97A;
+      --gold-pale: #F5E6BC;
+      --emerald: #1A3A2A;
+      --emerald-mid: #2C5F40;
+      --emerald-light: #3D7A54;
+      --cream: #FDF8EE;
+      --cream-dark: #F0E6C8;
+      --text-dark: #1A1207;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%; min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body {
+      background: var(--emerald);
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--cream);
+      position: relative;
+    }
+
+    /* ── Animated Background Pattern ── */
+    .bg-pattern {
+      position: fixed; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(201,168,76,0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(201,168,76,0.10) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(44,95,64,0.8) 0%, var(--emerald) 70%);
+    }
+
+    .bg-stars {
+      position: fixed; inset: 0; z-index: 0; overflow: hidden;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px; height: 2px;
+      background: var(--gold-light);
+      border-radius: 50%;
+      animation: twinkle var(--dur) ease-in-out infinite;
+      animation-delay: var(--delay);
+      opacity: 0;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0; transform: scale(0.5); }
+      50% { opacity: 0.8; transform: scale(1.2); }
+    }
+
+    /* ── Geometric ornament lines ── */
+    .ornament-corner {
+      position: fixed;
+      width: 120px; height: 120px;
+      z-index: 1;
+      opacity: 0.5;
+    }
+    .ornament-corner svg { width: 100%; height: 100%; }
+    .corner-tl { top: 16px; left: 16px; }
+    .corner-tr { top: 16px; right: 16px; transform: scaleX(-1); }
+    .corner-bl { bottom: 16px; left: 16px; transform: scaleY(-1); }
+    .corner-br { bottom: 16px; right: 16px; transform: scale(-1); }
+
+    /* ── Main wrapper ── */
+    .wrapper {
+      position: relative; z-index: 2;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 80px 24px;
+      text-align: center;
+    }
+
+    /* ── Crescent & Star ── */
+    .moon-star {
+      margin-bottom: 32px;
+      animation: floatDown 1.2s cubic-bezier(.22,.61,.36,1) both;
+      animation-delay: 0.2s;
+    }
+    .moon-star svg {
+      width: 90px; height: 90px;
+      filter: drop-shadow(0 0 18px rgba(201,168,76,0.7));
+    }
+
+    @keyframes floatDown {
+      from { opacity: 0; transform: translateY(-40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Arabic text ── */
+    .arabic {
+      font-family: 'Amiri', serif;
+      font-size: clamp(2rem, 6vw, 3.8rem);
+      line-height: 1.6;
+      color: var(--gold-light);
+      text-shadow: 0 0 30px rgba(201,168,76,0.4);
+      margin-bottom: 12px;
+      animation: reveal 1s ease both;
+      animation-delay: 0.5s;
+      direction: rtl;
+    }
+
+    /* ── Divider ornament ── */
+    .divider {
+      display: flex; align-items: center; gap: 16px;
+      margin: 20px 0;
+      width: min(400px, 80vw);
+      animation: reveal 1s ease both;
+      animation-delay: 0.7s;
+    }
+    .divider-line {
+      flex: 1; height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+    .divider-diamond {
+      width: 8px; height: 8px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+      box-shadow: 0 0 8px var(--gold);
+    }
+
+    /* ── Main heading ── */
+    .main-title {
+      font-size: clamp(2.4rem, 7vw, 5rem);
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      line-height: 1.1;
+      color: var(--cream);
+      animation: reveal 1s ease both;
+      animation-delay: 0.9s;
+    }
+    .main-title em {
+      font-style: italic;
+      color: var(--gold-light);
+      display: block;
+    }
+
+    .sub-title {
+      font-size: clamp(1.1rem, 3vw, 1.6rem);
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      color: var(--gold-pale);
+      margin-top: 10px;
+      text-transform: uppercase;
+      animation: reveal 1s ease both;
+      animation-delay: 1.1s;
+    }
+
+    /* ── Card body ── */
+    .card {
+      margin: 40px 0;
+      padding: 40px 44px;
+      max-width: 620px;
+      width: 100%;
+      background: rgba(253,248,238,0.06);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 2px;
+      position: relative;
+      animation: reveal 1s ease both;
+      animation-delay: 1.3s;
+      backdrop-filter: blur(6px);
+    }
+
+    /* Corner accents on card */
+    .card::before, .card::after,
+    .card .corner-b::before, .card .corner-b::after {
+      content: '';
+      position: absolute;
+      width: 18px; height: 18px;
+      border-color: var(--gold);
+      border-style: solid;
+    }
+    .card::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+    .card::after  { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+    .card .corner-b::before { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+    .card .corner-b::after  { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+    .card-text {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--cream-dark);
+    }
+    .card-text strong {
+      color: var(--gold-light);
+      font-weight: 600;
+    }
+
+    /* ── Lanterns ── */
+    .lanterns {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      display: flex; justify-content: space-around;
+      pointer-events: none; z-index: 1;
+    }
+    .lantern {
+      display: flex; flex-direction: column; align-items: center;
+      animation: swingL 4s ease-in-out infinite;
+      transform-origin: top center;
+    }
+    .lantern:nth-child(2) { animation-name: swingR; animation-delay: 0.5s; }
+    .lantern:nth-child(3) { animation-delay: 1s; }
+
+    @keyframes swingL {
+      0%,100% { transform: rotate(-4deg); }
+      50%      { transform: rotate(4deg); }
+    }
+    @keyframes swingR {
+      0%,100% { transform: rotate(4deg); }
+      50%      { transform: rotate(-4deg); }
+    }
+
+    .lantern-string {
+      width: 1px; height: 60px;
+      background: linear-gradient(to bottom, transparent, var(--gold));
+    }
+    .lantern-body {
+      width: 22px; height: 34px;
+      background: linear-gradient(135deg, rgba(201,168,76,0.9), rgba(201,120,30,0.8));
+      border-radius: 4px 4px 6px 6px;
+      box-shadow:
+        0 0 14px rgba(201,168,76,0.7),
+        0 0 30px rgba(201,120,30,0.4);
+      position: relative;
+    }
+    .lantern-body::after {
+      content: '';
+      position: absolute; inset: 3px;
+      background: rgba(255,220,100,0.5);
+      border-radius: 2px 2px 4px 4px;
+      animation: glow 2s ease-in-out infinite;
+    }
+    @keyframes glow {
+      0%,100% { opacity: 0.5; }
+      50%      { opacity: 1; }
+    }
+    .lantern-tassel {
+      width: 2px; height: 18px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+    }
+
+    /* ── Footer ── */
+    .footer {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(245,230,188,0.45);
+      animation: reveal 1s ease both;
+      animation-delay: 1.6s;
+    }
+
+    /* ── Fireworks ── */
+    .fireworks {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      overflow: hidden;
+    }
+    .spark {
+      position: absolute;
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--gold-light);
+      animation: spark var(--dur2) ease-out var(--del2) infinite;
+      opacity: 0;
+    }
+    @keyframes spark {
+      0%   { transform: translate(0,0) scale(1); opacity: 1; }
+      100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+    }
+
+    @keyframes reveal {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 500px) {
+      .card { padding: 28px 22px; }
+      .ornament-corner { width: 70px; height: 70px; }
+      .lanterns { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-pattern"></div>
+  <div class="bg-stars" id="stars"></div>
+  <div class="fireworks" id="fireworks"></div>
+
+  <!-- Corner ornaments -->
+  <div class="ornament-corner corner-tl">
+    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 5 L5 45 M5 5 L45 5" stroke="#C9A84C" stroke-width="1.5"/>
+      <path d="M5 5 L35 35" stroke="#C9A84C" stroke-width="0.8" stroke-dasharray="3,4"/>
+      <circle cx="5" cy="5" r="3" fill="#C9A84C"/>
+      <circle cx="45" cy="5" r="1.5" fill="#C9A84C" opacity="0.6"/>
+      <circle cx="5" cy="45" r="1.5" fill="#C9A84C" opacity="0.6"/>
+      <path d="M20 5 L20 20 L5 20" stroke="#C9A84C" stroke-width="0.8" opacity="0.5"/>
+    </svg>
+  </div>
+  <div class="ornament-corner corner-tr">
+    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 5 L5 45 M5 5 L45 5" stroke="#C9A84C" stroke-width="1.5"/>
+      <path d="M5 5 L35 35" stroke="#C9A84C" stroke-width="0.8" stroke-dasharray="3,4"/>
+      <circle cx="5" cy="5" r="3" fill="#C9A84C"/>
+      <circle cx="45" cy="5" r="1.5" fill="#C9A84C" opacity="0.6"/>
+      <circle cx="5" cy="45" r="1.5" fill="#C9A84C" opacity="0.6"/>
+      <path d="M20 5 L20 20 L5 20" stroke="#C9A84C" stroke-width="0.8" opacity="0.5"/>
+    </svg>
+  </div>
+  <div class="ornament-corner corner-bl">
+    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 5 L5 45 M5 5 L45 5" stroke="#C9A84C" stroke-width="1.5"/>
+      <path d="M5 5 L35 35" stroke="#C9A84C" stroke-width="0.8" stroke-dasharray="3,4"/>
+      <circle cx="5" cy="5" r="3" fill="#C9A84C"/>
+      <circle cx="45" cy="5" r="1.5" fill="#C9A84C" opacity="0.6"/>
+      <circle cx="5" cy="45" r="1.5" fill="#C9A84C" opacity="0.6"/>
+      <path d="M20 5 L20 20 L5 20" stroke="#C9A84C" stroke-width="0.8" opacity="0.5"/>
+    </svg>
+  </div>
+  <div class="ornament-corner corner-br">
+    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 5 L5 45 M5 5 L45 5" stroke="#C9A84C" stroke-width="1.5"/>
+      <path d="M5 5 L35 35" stroke="#C9A84C" stroke-width="0.8" stroke-dasharray="3,4"/>
+      <circle cx="5" cy="5" r="3" fill="#C9A84C"/>
+      <circle cx="45" cy="5" r="1.5" fill="#C9A84C" opacity="0.6"/>
+      <circle cx="5" cy="45" r="1.5" fill="#C9A84C" opacity="0.6"/>
+      <path d="M20 5 L20 20 L5 20" stroke="#C9A84C" stroke-width="0.8" opacity="0.5"/>
+    </svg>
+  </div>
+
+  <!-- Lanterns -->
+  <div class="lanterns">
+    <div class="lantern">
+      <div class="lantern-string"></div>
+      <div class="lantern-body"></div>
+      <div class="lantern-tassel"></div>
+    </div>
+    <div class="lantern">
+      <div class="lantern-string"></div>
+      <div class="lantern-body"></div>
+      <div class="lantern-tassel"></div>
+    </div>
+    <div class="lantern">
+      <div class="lantern-string"></div>
+      <div class="lantern-body"></div>
+      <div class="lantern-tassel"></div>
+    </div>
+  </div>
+
+  <div class="wrapper">
+
+    <!-- Crescent Moon & Star SVG -->
+    <div class="moon-star">
+      <svg viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Crescent -->
+        <path d="M45 10 C25 10 12 25 12 45 C12 65 25 80 45 80 C35 75 28 62 28 45 C28 28 35 15 45 10Z"
+              fill="url(#moon-grad)" />
+        <!-- Star -->
+        <polygon points="70,20 72.3,27.1 79.8,27.1 73.8,31.5 76.1,38.6 70,34.2 63.9,38.6 66.2,31.5 60.2,27.1 67.7,27.1"
+                 fill="#C9A84C"/>
+        <defs>
+          <linearGradient id="moon-grad" x1="12" y1="10" x2="45" y2="80" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#E8C97A"/>
+            <stop offset="100%" stop-color="#C9A84C"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+
+    <!-- Arabic -->
+    <div class="arabic">مِنَ الْعَائِدِينَ وَالْفَائِزِينَ</div>
+
+
+    <!-- Divider -->
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-diamond"></div>
+      <div class="divider-line"></div>
+      <div class="divider-diamond"></div>
+      <div class="divider-line"></div>
+    </div>
+
+    <!-- Main Title -->
+    <h1 class="main-title">
+      Minal Aidin
+      <em>Wal Faizin</em>
+    </h1>
+    <p class="sub-title">Met Lebaran, gengs! 🎉</p>
+
+    <!-- Divider -->
+    <div class="divider" style="margin-top:28px;">
+      <div class="divider-line"></div>
+      <div class="divider-diamond"></div>
+      <div class="divider-line"></div>
+    </div>
+
+    <!-- Card -->
+    <div class="card">
+      <div class="corner-b"></div>
+      <p class="card-text">
+        Eh halo kamu! 👋 Hari ini aku mau minta maaf ya —<br/>
+        <strong>maaf lahir batin</strong> buat semua salahku<br/>
+        yang kamu inget, <em>yang kamu lupa, maupun<br/>
+        yang belum sempet kamu sadarin.</em> 😅<br/><br/>
+        Semoga dosa-dosa kita pada luruh semua,<br/>
+        tinggal yang enak-enaknya aja —<br/>
+        <strong>opor, ketupat, sama THR-nya.</strong> 🍛🫙<br/><br/>
+        Taqabbalallahu minna wa minkum. 🤲<br/>
+        <em>Met lebaran! Semoga hari ini seru & hati kamu bersih kayak baru di-reset. ✨</em>
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <p class="footer">1446 H &nbsp;·&nbsp; Idul Fitri</p>
+
+  </div>
+
+  <script>
+    // Generate stars
+    const starsEl = document.getElementById('stars');
+    for (let i = 0; i < 80; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      s.style.cssText = `
+        left: ${Math.random()*100}%;
+        top: ${Math.random()*100}%;
+        --dur: ${2 + Math.random()*4}s;
+        --delay: ${Math.random()*5}s;
+        width: ${1 + Math.random()*2}px;
+        height: ${1 + Math.random()*2}px;
+      `;
+      starsEl.appendChild(s);
+    }
+
+    // Generate spark fireworks occasionally
+    const fwEl = document.getElementById('fireworks');
+    function burst() {
+      const cx = 20 + Math.random() * 60; // % of screen
+      const cy = 10 + Math.random() * 50;
+      const count = 10 + Math.floor(Math.random() * 8);
+      for (let i = 0; i < count; i++) {
+        const sp = document.createElement('div');
+        sp.className = 'spark';
+        const angle = (i / count) * 2 * Math.PI;
+        const dist = 40 + Math.random() * 60;
+        sp.style.cssText = `
+          left: ${cx}vw;
+          top: ${cy}vh;
+          --dur2: ${0.8 + Math.random()*0.6}s;
+          --del2: ${Math.random()*0.3}s;
+          --tx: ${Math.cos(angle)*dist}px;
+          --ty: ${Math.sin(angle)*dist}px;
+          background: hsl(${40 + Math.random()*20}, 90%, 70%);
+        `;
+        fwEl.appendChild(sp);
+        setTimeout(() => sp.remove(), 1800);
+      }
+    }
+    burst();
+    setInterval(burst, 3200);
+  </script>
+</body>
+</html>
